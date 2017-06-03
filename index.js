@@ -1,5 +1,6 @@
 const assembleProgram = require('./lib/assembler.js');
 const {types, i32, get_local, end} = require('./lib/constants.js');
+const {encodeUInt32} = require('./lib/leb128.js');
 
 const program = [
     {
@@ -43,6 +44,8 @@ const program = [
                 get_local, 1,
                 i32.add,
                 get_local, 2,
+                i32.add,
+                i32.const, ...encodeUInt32(1000),
                 i32.add,
                 end,
             ],
