@@ -1,6 +1,6 @@
 fetchAndInstantiate('build/manual.wasm').then(function(instance) {
-    console.log(instance.exports.add(5, 10, 15));  // "30"
-    console.log(instance.exports.mul(5, 10, 15));  // "750"
+    console.log(instance.exports.add(5, 10));  // "30"
+    console.log(instance.exports.mul(5, 10));  // "750"
 });
 
 fetchAndInstantiate('build/test.wasm').then(function(instance) {
