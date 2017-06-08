@@ -1,3 +1,5 @@
+require('babel-register');
+require('babel-polyfill');
 const fs = require('fs');
 const {ArgumentParser} = require('argparse');
 
@@ -25,5 +27,11 @@ if (args.verbose) {
     print(output);
 }
 
-const buffer = new Uint8Array(output);
-fs.writeFileSync(args.output, buffer, "binary");
+const bytes = new Uint8Array(output);
+
+var buffer = new Buffer(bytes.length);
+for (var i = 0; i < bytes.length; i++) {
+  buffer[i] = bytes[i];
+}
+
+fs.writeFileSync(args.output, buffer, {encoding: "binary"});
