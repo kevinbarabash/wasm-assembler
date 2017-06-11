@@ -24,13 +24,17 @@
     get_local $zero
     i32.eq
     if i32
-      get_local $lhs
-      get_local $rhs
-      i32.add
+      block i32
+        get_local $lhs
+        get_local $rhs
+        i32.add
+      end
     else
-      get_local $lhs
-      get_local $rhs
-      i32.sub
+      block i32
+        get_local $lhs
+        get_local $rhs
+        i32.sub
+      end
     end
   )
   (export "add" (func $add))
