@@ -1,10 +1,9 @@
 (module
   (import "console" "log" (func $log (param i32)))
+  (import "console" "print_str" (func $print_str (param i32 i32)))
+  ;; (import "js" "mem" (memory 1))
+  ;; (data (i32.const 0) "Hello, world!")
   (func $add (param $lhs i32) (param $rhs i32) (result i32)
-    get_local $lhs
-    call $log
-    ;; get_local $rhs
-    ;; call $log
     get_local $lhs
     get_local $rhs
     i32.add
@@ -56,6 +55,12 @@
     end
     call $log
   )
+  (func $main
+    i32.const 0
+    i32.const 13
+    call $print_str
+  )
+  (start $main)
   (export "add" (func $add))
   (export "mul" (func $mul))
   (export "add_or_sub" (func $add_or_sub))
