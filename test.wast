@@ -37,7 +37,27 @@
       end
     end
   )
+  (func $print_arr
+    (param $array i32) (param $length i32)
+    (local $index i32)
+    i32.const 0
+    set_local $index
+    loop i32
+      get_local $index
+      call $log
+      get_local $index
+      i32.const 1
+      i32.add
+      tee_local $index
+      i32.const 10
+      i32.ne
+      br_if 0
+      get_local $index
+    end
+    call $log
+  )
   (export "add" (func $add))
   (export "mul" (func $mul))
   (export "add_or_sub" (func $add_or_sub))
+  (export "print_arr" (func $print_arr))
 )

@@ -9,12 +9,14 @@ var importObject = {
 fetchAndInstantiate('build/manual.wasm', importObject).then(function(instance) {
     console.log(instance.exports.add(5, 10));  // "30"
     console.log(instance.exports.mul(5, 10));  // "750"
+    instance.exports.print_arr();
 });
 
 fetchAndInstantiate('build/test.wasm', importObject).then(function(instance) {
     console.log(instance.exports.add_or_sub(5, 10, 0));
     console.log(instance.exports.add_or_sub(5, 10, 1));
     console.log(instance.exports.add(5, 10));
+    instance.exports.print_arr();
 });
 
 // fetchAndInstantiate() found in wasm-utils.js
