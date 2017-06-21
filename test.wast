@@ -1,6 +1,6 @@
 (module
   (import "console" "log" (func $log (param i32)))
-  (import "console" "print_str" (func $print_str (param i32 i32)))
+  (import "console" "print_str" (func $print_str (param i32) (param i32)))
   ;; (import "js" "mem" (memory 1))
   ;; (data (i32.const 0) "Hello, world!")
   (func $add (param $lhs i32) (param $rhs i32) (result i32)
