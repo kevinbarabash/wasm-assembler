@@ -21,7 +21,6 @@ const args = parser.parseArgs();
 
 const code = fs.readFileSync(args.input).toString();
 const program = parse(code)
-console.log(JSON.stringify(program, null, 4))
 const output = assembleProgram(program);
 
 if (args.verbose) {
