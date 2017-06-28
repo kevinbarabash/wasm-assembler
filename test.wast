@@ -1,8 +1,8 @@
 (module
   (import "console" "log" (func $log (param i32)))
   (import "console" "print_str" (func $print_str (param i32) (param i32)))
-  ;; (import "js" "mem" (memory 1))
-  ;; (data (i32.const 0) "Hello, world!")
+  (import "js" "mem" (memory 1))
+  (data (i32.const 0) "Hello, world!")
   (func $add (param $lhs i32) (param $rhs i32) (result i32)
     get_local $lhs
     get_local $rhs
@@ -22,14 +22,14 @@
     get_local $op
     get_local $zero
     i32.eq
-    if i32
-      block i32
+    if (result i32)
+      block (result i32)
         get_local $lhs
         get_local $rhs
         i32.add
       end
     else
-      block i32
+      block (result i32)
         get_local $lhs
         get_local $rhs
         i32.sub
@@ -41,7 +41,7 @@
     (local $index i32)
     i32.const 0
     set_local $index
-    loop i32
+    loop (result i32)
       get_local $index
       call $log
       get_local $index
