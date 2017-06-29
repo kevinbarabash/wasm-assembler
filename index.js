@@ -27,11 +27,4 @@ if (args.verbose) {
     print(output);
 }
 
-const bytes = new Uint8Array(output);
-
-var buffer = new Buffer(bytes.length);
-for (var i = 0; i < bytes.length; i++) {
-  buffer[i] = bytes[i];
-}
-
-fs.writeFileSync(args.output, buffer, {encoding: "binary"});
+fs.writeFileSync(args.output, output, {encoding: "binary"});
