@@ -4394,9 +4394,11 @@ var Printer = function () {
         value: function print(bytes) {
             for (var i = 0; i < bytes.length; i++) {
                 if (i === 0) {
+                    // convert buffer to array so we can map properly
                     this.printLine([].concat(_toConsumableArray(bytes.slice(0, 4))), 'magic number');
                     i += 3;
                 } else if (i === 4) {
+                    // convert buffer to array so we can map properly
                     this.printLine([].concat(_toConsumableArray(bytes.slice(i, i + 4))), 'version number');
                     i += 3;
                 } else {
@@ -4529,7 +4531,7 @@ var Printer = function () {
                 len = bytes[i++];
                 strBytes = bytes.slice(i, i + len);
                 this.printLine([len], 'string length');
-                this.printLine(strBytes, '"' + bytesToString(strBytes) + '"');
+                this.printLine([].concat(_toConsumableArray(strBytes)), '"' + bytesToString(strBytes) + '"');
                 i += len;
                 if (sectionType === 'import') {
                     len = bytes[i++];
