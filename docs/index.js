@@ -1,3 +1,22 @@
+const assemble = module.exports.assemble;
+const parse = module.exports.parse;
+const print = module.exports.print;
+
+window.addEventListener('load', function() {
+    const assembleButton = document.getElementById('assemble');
+    const sourceTextarea = document.getElementById('source');
+    const outputTextarea = document.getElementById('output');
+
+    assembleButton.addEventListener('click', function() {
+        const source = sourceTextarea.value;
+
+        const ast = parse(source);
+        const output = assemble(ast);
+
+        outputTextarea.value = print(output);
+    });
+});
+
 // Allocate a single block of memory which is 64K
 var memory = new WebAssembly.Memory({initial: 1});
 var bytes = new Uint8Array(memory.buffer, 0, 13);

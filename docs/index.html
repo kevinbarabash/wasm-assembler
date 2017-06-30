@@ -1,6 +1,30 @@
 <html>
+<head>
+    <style>
+        textarea {
+            font-family: monospace;
+        }
+    </style>
+</head>
 <body>
 <h1>wasm-asm test page</h1>
+<div>
+    <textarea rows="40" cols="80" id="source">
+(module
+  (func $add (param $lhs i32) (param $rhs i32) (return i32)
+    get_local $lhs
+    get_local $rhs
+    i32.add
+  )
+)
+    </textarea>
+    <textarea rows="40" cols="80" id="output"></textarea>
+</div>
+<div>
+    <button id='assemble'>Assemble</button>
+</div>
+<script>var module = { exports: {} };</script>
+<script src="wasm-asm.js"></script>
 <script src="index.js"></script>
-</bdoy>
+</body>
 </html>

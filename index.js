@@ -22,7 +22,7 @@ const program = parse(code)
 const output = assemble(program);
 
 if (args.verbose) {
-    print(output);
+    console.log(print(output));
 }
 
 fs.writeFileSync(args.output, output, {encoding: "binary"});
