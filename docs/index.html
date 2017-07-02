@@ -2,10 +2,10 @@
 <head>
     <style>
         textarea {
-            /*width: 100%;*/
             flex-grow: 1;
             font-family: monospace;
             font-size: 14px;
+            resize: none;
         }
 
         #container {
@@ -86,7 +86,7 @@
     </div>
     <div class='cell'>
         <div class='header'>test.wasm</div>
-        <textarea id='binary'></textarea>
+        <textarea id='binary' readonly></textarea>
     </div>
     <div class='cell'>
         <div class='header'>index.js</div>
@@ -101,7 +101,7 @@ test.print_arr();
     </div>
     <div class='cell'>
         <div class='header'>console</div>
-        <textarea id='output'></textarea>
+        <textarea id='output' readonly></textarea>
     </div>
 </div>
 <script>var module = { exports: {} };</script>
