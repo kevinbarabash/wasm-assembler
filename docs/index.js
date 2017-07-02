@@ -2,16 +2,10 @@ const assemble = module.exports.assemble;
 const parse = module.exports.parse;
 const print = module.exports.print;
 
-// Allocate a single block of memory which is 64K
-var memory = new WebAssembly.Memory({initial: 1});
-var bytes = new Uint8Array(memory.buffer, 0, 13);
-const str = "Hello, world!";
-for (let i = 0; i < str.length; i++) {
-    bytes[i] = str.charCodeAt(i);
-}
+const memory = new WebAssembly.Memory({initial: 1});
 
 window.addEventListener('load', function() {
-    const assembleButton = document.getElementById('assemble');
+    const runButton = document.getElementById('run');
     const sourceTextarea = document.getElementById('source');
     const binaryTextarea = document.getElementById('binary');
     const jsTextarea = document.getElementById('js');
@@ -23,27 +17,43 @@ window.addEventListener('load', function() {
         }
     }
 
-    var importObject = {
+    const importObject = {
         console: {
             log: function(arg) {
                 _console.log(arg);
             },
             print_str: function(offset, length) {
-                var bytes = new Uint8Array(memory.buffer, offset, length);
-                var string = new TextDecoder('utf8').decode(bytes);
+                const bytes = new Uint8Array(memory.buffer, offset, length);
+                const string = new TextDecoder('utf8').decode(bytes);
                 _console.log(string);
             },
         },
         js: { mem: memory },
     };
 
-    assembleButton.addEventListener('click', function() {
+    let bin;
+
+    const assembleSource = function() {
         const source = sourceTextarea.value;
 
+        // TODO: combine these steps
         const ast = parse(source);
-        const bin = assemble(ast);
+        bin = assemble(ast);
 
+        // TODO: output error messages if something goes wrong when assembling
+        // the source.
         binaryTextarea.value = print(bin);
+    }
+
+    assembleSource();
+
+    sourceTextarea.addEventListener('keyup', function() {
+        assembleSource();
+    });
+
+    runButton.addEventListener('click', function() {
+        // clear output
+        outputTextarea.value = '';
 
         // TODO: regex all require statements and compile them before running
         // the code
