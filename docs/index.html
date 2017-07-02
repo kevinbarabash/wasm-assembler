@@ -2,27 +2,107 @@
 <head>
     <style>
         textarea {
+            /*width: 100%;*/
+            flex-grow: 1;
             font-family: monospace;
+            font-size: 14px;
+        }
+
+        #container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-row-gap: 8px;
+            grid-column-gap: 8px;
+            flex: 1 1 0%;
+            margin: 8px;
+        }
+
+        .cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            font-family: sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 <h1>wasm-asm test page</h1>
-<div>
-    <textarea rows="40" cols="80" id="source">
+<div style='margin-bottom: 16px;'>
+    <button id='assemble'>Assemble &amp; Run</button>
+</div>
+<div id='container'>
+    <div class='cell'>
+        <div class='header'>test.wast</div>
+        <textarea id="source">
 (module
-  (func $add (param $lhs i32) (param $rhs i32) (return i32)
+  (import "console" "log" (func $log (param i32)))
+  (import "console" "print_str" (func $print_str (param i32) (param i32)))
+  (import "js" "mem" (memory 1))
+  (data (i32.const 0) "Hello, world!")
+  (func $add (param $lhs i32) (param $rhs i32) (result i32)
     get_local $lhs
     get_local $rhs
     i32.add
   )
+  (func $print_arr
+    (param $array i32) (param $length i32)
+    (local $index i32)
+    i32.const 0
+    set_local $index
+    loop (result i32)
+      get_local $index
+      call $log
+      get_local $index
+      i32.const 1
+      i32.add
+      tee_local $index
+      i32.const 10
+      i32.ne
+      br_if 0
+      get_local $index
+    end
+    call $log
+  )
+  (func $main
+    i32.const 0
+    i32.const 13
+    call $print_str
+  )
+  (start $main)
   (export "add" (func $add))
+  (export "print_arr" (func $print_arr))
 )
-    </textarea>
-    <textarea rows="40" cols="80" id="output"></textarea>
-</div>
-<div>
-    <button id='assemble'>Assemble</button>
+</textarea>
+    </div>
+    <div class='cell'>
+        <div class='header'>test.wasm</div>
+        <textarea id='binary'></textarea>
+    </div>
+    <div class='cell'>
+        <div class='header'>index.js</div>
+        <textarea id='js'>
+const test = require('test.wasm');
+
+console.log(test.add(5, 10));
+
+// prints numbers from 0 to 10, but doesn't print an array... yet
+test.print_arr();
+</textarea>
+    </div>
+    <div class='cell'>
+        <div class='header'>console</div>
+        <textarea id='output'></textarea>
+    </div>
 </div>
 <script>var module = { exports: {} };</script>
 <script src="wasm-asm.js"></script>
