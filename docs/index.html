@@ -24,6 +24,7 @@
 
         .header {
             font-family: sans-serif;
+            height: 20px;
         }
 
         body {
@@ -33,17 +34,19 @@
             width: 100%;
             margin: 0;
         }
+
+        h1 {
+            font-family: sans-serif;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
-<h1>wasm-asm test page</h1>
-<div style='margin-bottom: 16px;'>
-    <button id='run'>Run</button>
-</div>
+<h1>wasm playground</h1>
 <div id='container'>
     <div class='cell'>
         <div class='header'>test.wast</div>
-        <textarea id="source">
+        <textarea id="source" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 (module
   (import "console" "log" (func $log (param i32)))
   (import "console" "print_str" (func $print_str (param i32) (param i32)))
@@ -89,8 +92,11 @@
         <textarea id='binary' readonly></textarea>
     </div>
     <div class='cell'>
-        <div class='header'>index.js</div>
-        <textarea id='js'>
+        <div class='header'>
+            index.js
+            <button id='run'>Run</button>
+        </div>
+        <textarea id='js' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 const test = require('test.wasm');
 
 console.log(test.add(5, 10));
